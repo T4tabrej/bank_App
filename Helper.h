@@ -40,7 +40,7 @@ class Helper{
                
                 }
                 else if(choice==3){
-
+                    // check_Pin("BK449","10/12/1990");
                 }
                 else if(choice==4){
 
@@ -103,25 +103,45 @@ class Helper{
 
 //ending of opening Account
         double bal_check(string acc){
-            string an,n,ad,b,amt;
+            string an,n,ad,b,amt,p,check_pin;
             fstream data3;
             int c=0;
             double avl_bal=0;
             // fstream data2;
             data3.open("database.txt",ios::in);
-            data3>>an>>n>>ad>>b>>amt;
+            data3>>an>>n>>ad>>b>>amt>>p;
             // cout<<an<<endl;
+
+
+            //FIRST SCANNING ALL DATA FOR SEARCH OF ACC-NO
             while (!data3.eof())
             {
                 // cout<<an<<endl;
+
+                // MATCHING ACCOUNT NO TO THE DATA FETCH DATA FROM DATABASE
               if (an==acc)
               {
+                m:
+                cout<<"\t\t\t\t\tEnter Your Pin..:";
+                cin>>check_pin;
+
+                // MATCHING PIN NO TO THE  RESPECTIVE ACCOUNT DATA FETCH DATA FROM DATABASE
+    
+                if (check_pin==pin)
+                {
+                     avl_bal=stod(amt);;
+                       c++;
+                     break;
+                }
+                else{
+                    cout<<"\t\t\t\t\tPlease Enter Correct Pin"<<endl;
+                    goto m;
+                }
+                
                
-               avl_bal=stod(amt);;
-               c++;
-               break;
+             
               }
-              data3>>an>>n>>ad>>b>>amt;
+              data3>>an>>n>>ad>>b>>amt>>p;
             }
             // cout<<c<<endl;
             if (c==1)
@@ -130,13 +150,14 @@ class Helper{
             }
             else
             {
-                cout<<"Account Doesn't Exist..."<<endl;
+                cout<<"\t\t\t\t\tAccount Doesn't Exist..."<<endl;
                 return 0.0;
             }
             
             
 
         }
+
 
 
 
