@@ -159,6 +159,13 @@ class Helper{
         }
 
 
+        //deposit money method
+
+        void deposit_money(){
+
+        }
+
+
 
 
 
