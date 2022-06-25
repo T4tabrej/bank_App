@@ -162,6 +162,13 @@ class Helper{
         //deposit money method
 
         void deposit_money(){
+            string a_n;
+            double d_a;
+            cout<<"\t\t\t\t\tPlease Enter Account Number :";
+            cin>>a_n;
+            cout<<"\t\t\t\t\t Enter Amount :";
+            cin>>d_a;
+
 
         }
 
