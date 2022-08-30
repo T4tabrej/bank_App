@@ -17,12 +17,12 @@ public:
         do
         {
 
-            cout << "\t\t\t\t\t||Click 1 for Open Account\t\t\t\t\t||" << endl;
+            cout << "\t\t\t\t\t||Click 1 for Open Account          ||" << endl;
             cout << "\t\t\t\t\t||Click 2 for Balance Enquiry       ||" << endl;
             cout << "\t\t\t\t\t||Click 3 for Deposit Money         ||" << endl;
             cout << "\t\t\t\t\t||Click 4 for WidthDrawl            ||" << endl;
-            cout << "\t\t\t\t\t||Click 5 for close An Account      ||" << endl;
-            cout << "\t\t\t\t\t||Click 6 for Show all Account      ||" << endl;
+            cout << "\t\t\t\t\t||Click 5 for Show all Account      ||" << endl;
+            cout << "\t\t\t\t\t||Click 6  for close an Account     ||" << endl;
             cout << "\t\t\t\t\t||Click 7 for Quit                  ||" << endl;
             cout << "\t\t\t\t\t||enter your Choice                  :";
             cin >> choice;
@@ -48,15 +48,22 @@ public:
             }
             else if (choice == 4)
             {
+                widthrawl_bal();
             }
             else if (choice == 5)
             {
+                 show_all_acc();
             }
             else if (choice == 6)
             {
+                delete_acc();
             }
             else if (choice == 7)
             {
+                 cout << "\t\t\t\t\t Thank You For Using Digital Banking... :\n";
+            }
+            else{
+                cout << "\t\t\t\t\t INVALID INPUT ... :\n";
             }
 
         } while (choice != 7);
@@ -209,4 +216,155 @@ public:
             cout << "\t\t\t\t\t Money Deposited... :";
         }
     }
+
+
+
+    // for widthrawl
+    void  widthrawl_bal(){
+         string a_n;
+        double d_a;
+        bool found = false;
+        cout << "\t\t\t\t\tPlease Enter Account Number :";
+        cin >> a_n;
+        cout << "\t\t\t\t\t Enter Amount for Widthdrawl :";
+        cin >> d_a;
+        string an, n, ad, b, amt, p;
+        fstream data3, d_data;
+        data3.open("database.txt");
+        d_data.open("database1.txt", ios::app | ios::out);
+
+        // for storing all data to check the account no is matching or not
+        data3 >> an >> n >> ad >> b >> amt >> p;
+        bool insuf_bal=false;
+        while (!data3.eof())
+        {
+
+            // cout<<an<<" "<<n<<" "<<ad<<" "<<b<<" "<<amt<<" "<<p<<endl;
+        
+            if (a_n == an)
+            {
+              
+            //   if amt is greater than the widthrawl amt value will be updated else same value is passed to the database 
+                if(stod(amt) > d_a){
+
+                
+               
+                double total = stod(amt) - d_a;
+
+                d_data << an << "\t\t\t\t\t\t" << n << "\t\t\t\t\t\t" << ad << "\t\t\t\t\t\t" << b << "\t\t\t\t\t\t" << total << "\t\t\t\t\t\t" << p << endl;
+                found = true;
+                }
+
+                else{
+                     cout << "\t\t\t\t\t Insufficient Balnce...";
+                     d_data << an << "\t\t\t\t\t\t" << n << "\t\t\t\t\t\t" << ad << "\t\t\t\t\t\t" << b << "\t\t\t\t\t\t" << amt << "\t\t\t\t\t\t" << p << endl;
+                     found = true;
+
+                     insuf_bal=true;
+                }
+                //    cout<<"Total Balance : "<<amt<<endl;
+                //    break;
+           
+
+          
+            }
+           
+            else
+            {
+                d_data << an << "\t\t\t\t\t\t" << n << "\t\t\t\t\t\t" << ad << "\t\t\t\t\t\t" << b << "\t\t\t\t\t\t" << amt << "\t\t\t\t\t\t" << p << endl;
+            }
+
+            data3 >> an >> n >> ad >> b >> amt >> p;
+        
+    }
+
+        data3.close();
+        d_data.close();
+        // finally remove old file and rename new file to old file
+       
+        if (!found)
+        {
+            cout << "\t\t\t\t\t Account Doesn't Exist... :";
+        }
+        else
+        {
+            remove("database.txt");
+            rename("database1.txt", "database.txt");
+
+            if(!insuf_bal){
+            cout << "\t\t\t\t\t Money Widthraw Succesfully... :";
+            }
+           
+        }
+        
+    }
+
+//for show all account
+void show_all_acc(){
+      string an, n, ad, b, amt, p;
+        fstream data;
+        data.open("database.txt");
+         data >> an >> n >> ad >> b >> amt >> p;
+                cout << "Account Number \t\t\t\t\t\t" <<"Name" << "\t\t\t\t\t\t" << "Address"<< "\t\t\t\t\t\t" << "DOB" << "\t\t\t\t\t\t" << "Balance" << "\t\t\t\t\t\t" << "Pin"<< endl;
+        while (!data.eof())
+        {
+                cout << an << "\t\t\t\t\t\t" << n << "\t\t\t\t\t\t" << ad << "\t\t\t\t\t\t" << b << "\t\t\t\t\t\t" << amt << "\t\t\t\t\t\t" << p<< endl;
+                 data >> an >> n >> ad >> b >> amt >> p;
+       
+        }
+
+}
+
+void delete_acc(){
+
+
+ string a_n;
+        double d_a;
+        bool found = false;
+        cout << "\t\t\t\t\tPlease Enter Account Number for Delete the Account:";
+        cin >> a_n;
+        string an, n, ad, b, amt, p;
+        fstream data3, d_data;
+        data3.open("database.txt");
+        d_data.open("database1.txt", ios::app | ios::out);
+
+        // for storing all data to check the account no is matching or not
+        data3 >> an >> n >> ad >> b >> amt >> p;
+
+        while (!data3.eof())
+        {
+
+            // cout<<an<<" "<<n<<" "<<ad<<" "<<b<<" "<<amt<<" "<<p<<endl;
+            if (a_n == an)
+            {
+               
+                found = true;
+              
+            }
+            else
+            {
+                d_data << an << "\t\t\t\t\t\t" << n << "\t\t\t\t\t\t" << ad << "\t\t\t\t\t\t" << b << "\t\t\t\t\t\t" << amt << "\t\t\t\t\t\t" << p << endl;
+            }
+
+            data3 >> an >> n >> ad >> b >> amt >> p;
+        }
+
+        data3.close();
+        d_data.close();
+        // finally remove old file and rename new file to old file
+        remove("database.txt");
+        rename("database1.txt", "database.txt");
+        if (!found)
+        {
+            cout << "\t\t\t\t\t Account Doesn't Exist... :\n";
+        }
+        else
+        {
+            cout << "\t\t\t\t\t Account Deleted.. :\n";
+        }
+
+
+
+}
+
 };

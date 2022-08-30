@@ -1,2 +1,1 @@
-BK707						tabrej						jamshedpur						10/12/1995						7000						10/12/1995
-BK449						tabssum						jamshedpur						10/10/1197						8000						10/10/1197
+BK707						SONU						JSR						10/12/1995						1000						10/12/1995
